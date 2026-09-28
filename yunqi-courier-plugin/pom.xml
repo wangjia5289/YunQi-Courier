@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>yunqi-courier-plugin</artifactId>
+    <packaging>pom</packaging>
+
+    <parent>
+        <groupId>yunqi.courier</groupId>
+        <artifactId>yunqi-courier</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <modules>
+        <module>yunqi-courier-registry-memory</module>
+        <module>yunqi-courier-registry-file</module>
+        <module>yunqi-courier-registry-zookeeper</module>
+        <module>yunqi-courier-serialization-json</module>
+        <module>yunqi-courier-serialization-protobuf</module>
+        <module>yunqi-courier-serialization-cbor</module>
+        <module>yunqi-courier-proxying-jdk</module>
+        <module>yunqi-courier-proxying-bytebuddy</module>
+        <module>yunqi-courier-traffic-loadbalancing-random</module>
+        <module>yunqi-courier-traffic-loadbalancing-round-robin</module>
+        <module>yunqi-courier-traffic-loadbalancing-weighted</module>
+        <module>yunqi-courier-traffic-loadbalancing-least-active</module>
+        <module>yunqi-courier-compression-lz4</module>
+        <module>yunqi-courier-encryption-aes-gcm</module>
+        <module>yunqi-courier-encoding-utf8</module>
+        <module>yunqi-courier-binary2text-base64</module>
+        <module>yunqi-courier-binary2text-base64url</module>
+        <module>yunqi-courier-network-netty</module>
+        <module>yunqi-courier-telemetry-otlp</module>
+    </modules>
+
+</project>

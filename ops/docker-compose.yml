@@ -1,0 +1,54 @@
+services:
+  zookeeper:
+    image: zookeeper:3.9.2
+    container_name: yunqi-courier-zookeeper
+    restart: unless-stopped
+    ports:
+      - "2281:2281"
+    volumes:
+      - ./zookeeper/tls:/tls:ro
+      - zk-data:/data
+      - zk-datalog:/datalog
+      - zk-logs:/logs
+    environment:
+      ZOO_TICK_TIME: "2000"
+      ZOO_INIT_LIMIT: "5"
+      ZOO_SYNC_LIMIT: "2"
+      ZOO_SERVERS: "server.1=localhost:2888:3888;0"
+      ZOO_MAX_CLIENT_CNXNS: "200"
+      ZOO_ADMINSERVER_ENABLED: "true"
+      ZOO_CFG_EXTRA: |
+        clientPort=0
+        secureClientPort=2281
+        serverCnxnFactory=org.apache.zookeeper.server.NettyServerCnxnFactory
+        ssl.keyStore.location=/tls/server.p12
+        ssl.keyStore.password=changeit
+        ssl.keyStore.type=PKCS12
+        ssl.trustStore.location=/tls/server-trust.p12
+        ssl.trustStore.password=changeit
+        ssl.trustStore.type=PKCS12
+        ssl.clientAuth=need
+        ssl.hostnameVerification=true
+        authProvider.1=org.apache.zookeeper.server.auth.DigestAuthenticationProvider
+        requireClientAuthScheme=digest
+        4lw.commands.whitelist=ruok,stat
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:8080/commands/ruok | grep -q 'command.*ruok'"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  otel-collector:
+    image: otel/opentelemetry-collector-contrib:0.110.0
+    container_name: yunqi-courier-otel
+    restart: unless-stopped
+    command: ["--config=/etc/otelcol-contrib/config.yaml"]
+    ports:
+      - "4318:4318"
+    volumes:
+      - ./otel/collector-config.yaml:/etc/otelcol-contrib/config.yaml:ro
+
+volumes:
+  zk-data:
+  zk-datalog:
+  zk-logs:

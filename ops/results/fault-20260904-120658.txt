@@ -1,0 +1,1 @@
+requests=50000 concurrency=32 fault=true success=15000 failure=2000 timeout=0 throughput_rps=47550.05 p50_ms=0.561 p95_ms=0.895 p99_ms=1.439
